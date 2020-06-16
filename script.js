@@ -37,7 +37,7 @@ var sizeDat;
 function setFile() {
     var file = $("#textArea").val().toString();
     $("#textArea").val('');
-    file = file.replace(/[?!]/gi, ".").replace(/\n/gi, "").replace("́", "");
+    file = file.replace(/[?!]/gi, ".").replace(/\n/gi, "").replaceAll("́", "").replace(/\[.\]/gi,"").replace(/\[..\]/gi,"").replace(/\[...\]/gi,"").replace(/\[....\]/gi,"").replace(/\[.....\]/gi,"").replace(/\[......\]/gi,"").replace(/\[.......\]/gi,"").replace(/\[........\]/gi,"");
     while (file.includes("  ")) file = file.replace("  ", " ");
     var str = "";
     for (var i = 0; i < file.length - 1; i++)
