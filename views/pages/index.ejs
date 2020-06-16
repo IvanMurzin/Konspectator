@@ -1,27 +1,75 @@
 <html>
 
 <head>
-    <link href="style.css" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script.js"></script>
-    <title>Конспектатор</title>
+	<link rel="shortcut icon" href="https://c7.hotpng.com/preview/182/227/697/the-age-of-napoleon-french-revolution-clip-art-napoleon-bonaparte-cliparts.jpg" type="image/x-icon">
+	<link href="/mainStyle.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="script.js"></script>
+	<title>Конспектатор</title>
 </head>
 
 <body>
-    <div id="setFile">
-        <textarea name="fileName" id="textArea"></textarea>
-        <input type="button" value="Отправить параграф" id="buttonSetFile">
-    </div>
-    <div id="getDates">
-        <input type="submit" value="Посмотреть даты" id="buttonGetDates">
-    </div>
-    <div id="getImportant">
-        <input type="submit" value="Посмотреть важные события" id="buttonGetImportant">
-    </div>
-    <h1>Dates</h1>
-    <p id="dates"></p>
-    <h1>Important</h1>
-    <p id="important"></p>
+	<nav class="navbar navbar-dark bg-dark shadow-sm">
+		<span class="navbar-brand mb-0 h1">На этом сайте вы сможете быстро получить конспект из текстов по истории</span>
+	</nav>
+	<section class="jumbotron text-center">
+		<div class="container">
+			<h1>Конспектатор</h1>
+			<p class="lead text-muted">
+				Или как подготовиться к контрольной работе по истории
+			</p>
+			<div id="setFile">
+				<div id="setFile">
+					<form method='POST' action="/setFile">
+						<textarea name="fileName" id="textArea"></textarea>
+						<input type="submit" class="btn btn-primary btn-lg" value="Отправить параграф"
+							id="buttonSetFile">
+					</form>
+				</div>
+	</section>
+	<div class="album py-5 bg-light">
+		<div class='wrapper text-center'>
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<div id="getDates">
+					<button type="submit" class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1"
+						role="button" aria-expanded="false" aria-controls="multiCollapseExample1"
+						id="buttonGetDates">Посмотреть даты</button>
+				</div>
+				<div id="getImportant">
+					<button type="submit" class="btn btn-primary" data-toggle="collapse"
+						data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2"
+						id="buttonGetImportant">Посмотреть важные события</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="collapse multi-collapse" id="multiCollapseExample1">
+					<div class="card card-body" id="dates">
+						<ul><%- dat %></ul>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="collapse multi-collapse" id="multiCollapseExample2">
+					<div class="card card-body" id="important">
+						<ul><%- imp %></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>

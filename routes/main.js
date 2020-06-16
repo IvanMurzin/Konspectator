@@ -1,63 +1,55 @@
-//нажатие на кнопку установить параграф
-//если параграф не установить, то и нечего будет отображать
-$(function () {
-    $("#buttonSetFile").click(function () {
-        setFile();
+var express = require('express');
+const createError = require('http-errors');
+var router = express.Router();
+
+router.get('/', function(req, res) {
+    res.render('pages/index', {
+        imp: this.impo,
+        dat: this.date
     });
 });
-//нажатие на кнопку показать даты
-$(function () {
-    $("#buttonGetDates").click(function () {
-        //обращается к id=dates и выставляет там даты
-        //getDatesSentences() возвращает строку с датами, разделенную "!"
-        //здесь я ее разделяю двумя отступами(это "<br><br>"), чтобы выглядело по-человечески, можно спокойно ставить по-другому и так, как нравится
-        $("#dates").html(getDatesSentences().replaceAll("!","<br><br>"));
-    });
-});
-//нажатие на кнопку показать важные события
-$(function () {
-    $("#buttonGetImportant").click(function () {
-        //обращается к id=important и выставляет там важну. информацию
-        //getImportantSentences() возвращает строку с важной информацией, разделенную "!"
-        //здесь я ее разделяю двумя отступами(это "<br><br>"), чтобы выглядело по-человечески, можно спокойно ставить по-другому и так, как нравится
-        $("#important").html(getImportantSentences().replaceAll("!","<br><br>"));
+router.post('/setFile',function (request, response,next){
+    setFile(request.body.fileName);
+     impo = "<p><li>"+getImportantSentences().replace(/!/gi,"</li</p><p><li>");
+     date ="<p><li>"+getDatesSentences().replace(/!/gi,"</li</p><p><li>");
+     response.render('pages/index', {
+        imp: impo,
+        dat: date
     });
 });
 
+module.exports = router;
 
 
-
-
-//то, что мой код
 
 var file;
 var sentenceList;
 var sizeImp;
 var sizeDat;
-function setFile() {
-    var file = $("#textArea").val().toString();
-    $("#textArea").val('');
-    file = file.replace(/[?!]/gi, ".").replace(/\n/gi, "").replaceAll("́", "").replace(/\[.\]/gi,"").replace(/\[..\]/gi,"").replace(/\[...\]/gi,"").replace(/\[....\]/gi,"").replace(/\[.....\]/gi,"").replace(/\[......\]/gi,"").replace(/\[.......\]/gi,"").replace(/\[........\]/gi,"");
+function setFile(fileName) {
+    var file = fileName.toString();
+    file = file.replace(/[?!]/gi, ".").replace(/\n/gi, "").replace(/\[.\]/gi,"").replace(/\[..\]/gi,"").replace(/\[...\]/gi,"").replace(/\[....\]/gi,"").replace(/\[.....\]/gi,"").replace(/\[......\]/gi,"").replace(/\[.......\]/gi,"").replace(/\[........\]/gi,"");
     while (file.includes("  ")) file = file.replace("  ", " ");
     var str = "";
     for (var i = 0; i < file.length - 1; i++)
         if (!((file.charAt(i) == '-') && (file.charAt(i - 1) != ' ') && (file.charAt(i + 1) != ' ')))
-            str += file.charAt(i);
+            str += file.charAt(i);            
     this.file = str;
     sentenceList = getSentenceList();
     cutFile();
 }
 
 function cutFile() {
+    var file = this.file;
     var newFile = file.toLowerCase() + " ";
     newFile = newFile.replace(/(в|вши|вшись|ив|ивши|ившись|ыв|ывши|ывшись|ся|сь|ость|ост|ее|ие|ые|ое|ими|ыми|ей|ий|ый|ой|ем|им|ым|ом|его|ого|ему|ому|их|ых|ую|юю|ая|яя|ою|ею|ем|нн|вш|ющ|щ|ивш|ывш|ующ|ла|на|ете|йте|ли|й|л|ем|н|ло|но|ет|ют|ны|ть|ешь|нно|ила|ыла|ена|ейте|уйте|ите|или|ыли|ей|уй|ил|ыл|им|ым|ен|ило|ыло|ено|ят|ует|уют|ит|ыт|ены|ить|ыть|ишь|ую|ю|ев|ов|ие|ье|е|иями|ями|ами|еи|ии|и|ией|ей|ой|ий|й|иям|ям|ием|ем|ам|ом|о|у|ах|иях|ях|ы|ь|ию|ью|ю|ия|ья|я|а|и|нн|ейш|ейше|нейш|нейше|ь|)\s/gi, " ").replace(/[,.-]/gi, " ");
     return newFile;
 }
 function getSentenceList() {
+    var file = this.file;
     var charFile = file.split('');
     for (var i = 0; i < file.length; ++i)
-        if (charFile[i] == '.' && (charFile[i - 1] != 'г') && ((charFile[i - 1] <= 'А' || charFile[i - 1] >= 'Я')))
-            charFile[i] = '!';
+        if (charFile[i] == '.' && (charFile[i - 1] != 'г') && ((charFile[i - 1] <= 'А' || charFile[i - 1] >= 'Я'))) charFile[i] = '!';
     var newFile = charFile.join("");
     return newFile.split("!");
 }
