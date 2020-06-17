@@ -15,12 +15,12 @@ router.get('/', function (req, res) {
 });
 router.post('/setFile', function (request, response, next) {
     setFile(request.body.fileName);
-    imp = "<p><li>" + getImportantSentences().replace(/!/gi, "</li</p><p><li>");
-    dat = "<p><li>" + getDatesSentences().replace(/!/gi, "</li</p><p><li>");
     var toast = "Сейчас обработаю...";
     if (request.body.fileName == "" || request.body.name == "") {
         toast = "Название и текст параграфа не может быть пустым!"
     } else {
+        imp = "<p><li>" + getImportantSentences().replace(/!/gi, "</li</p><p><li>");
+        dat = "<p><li>" + getDatesSentences().replace(/!/gi, "</li</p><p><li>");
         var paragraph = {
             name: request.body.name,
             imp: imp,
