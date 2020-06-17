@@ -2,36 +2,43 @@ var express = require('express');
 const createError = require('http-errors');
 var router = express.Router();
 var fs = require('fs');
-var imp="";
-var dat="";
+var imp = "";
+var dat = "";
 
 
 router.get('/', function (req, res) {
     res.render('pages/index', {
         imp: imp,
-        dat: dat
+        dat: dat,
+        toast: " 	(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
     });
 });
 router.post('/setFile', function (request, response, next) {
     setFile(request.body.fileName);
     imp = "<p><li>" + getImportantSentences().replace(/!/gi, "</li</p><p><li>");
     dat = "<p><li>" + getDatesSentences().replace(/!/gi, "</li</p><p><li>");
-    var paragraph = {
-        name: request.body.name,
-        imp: imp,
-        dat: dat
-    }
-    fs.readFile('history.json', function (err, content) {
-        if (err) throw err;
-        var parsedJSON = JSON.parse(content);
-        parsedJSON.push(paragraph);
-        fs.writeFile('history.json', JSON.stringify(parsedJSON), function (err) {
+    var toast = "Сейчас обработаю...";
+    if (request.body.fileName == "" || request.body.name == "") {
+        toast = "Название и текст параграфа не может быть пустым!"
+    } else {
+        var paragraph = {
+            name: request.body.name,
+            imp: imp,
+            dat: dat
+        }
+        fs.readFile('history.json', function (err, content) {
             if (err) throw err;
+            var parsedJSON = JSON.parse(content);
+            parsedJSON.push(paragraph);
+            fs.writeFile('history.json', JSON.stringify(parsedJSON), function (err) {
+                if (err) throw err;
+            });
         });
-    });
+    }
     response.render('pages/index', {
         imp: imp,
-        dat: dat
+        dat: dat,
+        toast: toast
     });
 });
 module.exports = router;

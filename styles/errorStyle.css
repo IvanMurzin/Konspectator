@@ -1,0 +1,28 @@
+html, body {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    background-color: #F7F8FB;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+.message {
+    text-align: center;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    padding: 300px 0px;
+    max-width: 650px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #000000;
+    border: 1px solid #7F828B;
+}
