@@ -1,23 +1,39 @@
 var express = require('express');
 const createError = require('http-errors');
 var router = express.Router();
+var fs = require('fs');
+var imp="";
+var dat="";
 
-router.get('/', function(req, res) {
+
+router.get('/', function (req, res) {
     res.render('pages/index', {
-        imp: this.impo,
-        dat: this.date
+        imp: imp,
+        dat: dat
     });
 });
-router.post('/setFile',function (request, response,next){
+router.post('/setFile', function (request, response, next) {
     setFile(request.body.fileName);
-     impo = "<p><li>"+getImportantSentences().replace(/!/gi,"</li</p><p><li>");
-     date ="<p><li>"+getDatesSentences().replace(/!/gi,"</li</p><p><li>");
-     response.render('pages/index', {
-        imp: impo,
-        dat: date
+    imp = "<p><li>" + getImportantSentences().replace(/!/gi, "</li</p><p><li>");
+    dat = "<p><li>" + getDatesSentences().replace(/!/gi, "</li</p><p><li>");
+    var paragraph = {
+        name: request.body.name,
+        imp: imp,
+        dat: dat
+    }
+    fs.readFile('history.json', function (err, content) {
+        if (err) throw err;
+        var parsedJSON = JSON.parse(content);
+        parsedJSON.push(paragraph);
+        fs.writeFile('history.json', JSON.stringify(parsedJSON), function (err) {
+            if (err) throw err;
+        });
+    });
+    response.render('pages/index', {
+        imp: imp,
+        dat: dat
     });
 });
-
 module.exports = router;
 
 
@@ -28,12 +44,12 @@ var sizeImp;
 var sizeDat;
 function setFile(fileName) {
     var file = fileName.toString();
-    file = file.replace(/[?!]/gi, ".").replace(/\n/gi, "").replace(/\[.\]/gi,"").replace(/\[..\]/gi,"").replace(/\[...\]/gi,"").replace(/\[....\]/gi,"").replace(/\[.....\]/gi,"").replace(/\[......\]/gi,"").replace(/\[.......\]/gi,"").replace(/\[........\]/gi,"");
+    file = file.replace(/[?!]/gi, ".").replace(/\n/gi, "").replace(/\[.\]/gi, "").replace(/\[..\]/gi, "").replace(/\[...\]/gi, "").replace(/\[....\]/gi, "").replace(/\[.....\]/gi, "").replace(/\[......\]/gi, "").replace(/\[.......\]/gi, "").replace(/\[........\]/gi, "");
     while (file.includes("  ")) file = file.replace("  ", " ");
     var str = "";
     for (var i = 0; i < file.length - 1; i++)
         if (!((file.charAt(i) == '-') && (file.charAt(i - 1) != ' ') && (file.charAt(i + 1) != ' ')))
-            str += file.charAt(i);            
+            str += file.charAt(i);
     this.file = str;
     sentenceList = getSentenceList();
     cutFile();

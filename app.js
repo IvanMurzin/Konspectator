@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false,limit: '50mb' }));
 app.use(express.static(__dirname + '/styles'));
 app.use('/', require('./routes/main'));
 app.use("/setFile", require('./routes/main'));
+app.use("/saveFile", require('./routes/main'));
 app.use(function (req, res, next) { next(createError(404)); });
 app.use(function (err, req, res, next) {
     res.status(err.status || 500)
