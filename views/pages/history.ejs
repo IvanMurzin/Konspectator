@@ -3,6 +3,13 @@
     <title>История</title>
 </head>
 <body>
+    <form method="GET" action="/search">
+    <input type="search" name="name" placeholder="Введите имя параграфа"> 
+    <input type="submit" id="buttonSearch">
+    </form>
+    <form method="GET" action="/">
+        <input type="submit" value="Вернуться на главную">
+        </form>
     <% history.forEach(function(history) { %>
         <div class="history">
         <%- include('../partials/historyDescription', {history: history}); %>

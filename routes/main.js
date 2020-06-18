@@ -48,9 +48,36 @@ router.get('/history', (request, response) => {
     fs.readFile('history.json', function (err, content) {
         if (err) throw err;
         parsedJSON = JSON.parse(content);
-        response.render('pages/history',{
+        response.render('pages/history', {
             history: parsedJSON
         });
+    });
+});
+
+router.get("/search", (request, response) => {
+    var name = request.query.name
+    var parsedJSON;
+    var ans = [];
+    var flag = true;
+    fs.readFile('history.json', function (err, content) {
+        if (err) throw err;
+        parsedJSON = JSON.parse(content);
+        for (var par of parsedJSON) {
+            if (par.name == name) {
+                flag = false;
+                var paragraph = {
+                    name: name,
+                    imp: par.imp,
+                    dat: par.dat
+                }
+                ans.push(paragraph)
+                response.render('pages/history', {
+                    history: ans
+                });
+                break;
+            }
+        }
+        if (flag) response.render('pages/nothing')
     });
 });
 

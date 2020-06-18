@@ -16,6 +16,7 @@ app.use(express.static(__dirname + '/styles'));
 app.use('/', require('./routes/main'));
 app.use("/setFile", require('./routes/main'));
 app.use("/history", require('./routes/main'));
+app.use("/search",require('./routes/main'));
 
 app.use(function (req, res, next) { next(createError(404)); });
 app.use(function (err, req, res, next) {
