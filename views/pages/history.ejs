@@ -1,19 +1,37 @@
 <html>
 <head>
+<link rel="shortcut icon"
+		href="https://c7.hotpng.com/preview/182/227/697/the-age-of-napoleon-french-revolution-clip-art-napoleon-bonaparte-cliparts.jpg"
+		type="image/x-icon">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>История</title>
+    <link href="/historyStyle.css" rel="stylesheet">
 </head>
 <body>
-    <form method="GET" action="/search">
-    <input type="search" name="name" placeholder="Введите имя параграфа"> 
-    <input type="submit" id="buttonSearch">
+	<nav class="navbar navbar-dark bg-dark justify-content-between">
+			<a type="submit" class="btn btn-outline-light my-2 my-sm-0 btn-lg h1" href="http://localhost:3000/">На этом сайте вы сможете быстро получить конспект из текстов по истории</a>
+			<div id="history">
+				<form method='GET' action="/history" class="form-inline">
+					<input type="submit" class="btn btn-outline-light my-2 my-sm-0 btn-lg" value="история" id="buttonHistory">
+				</form>
+	</nav>
+	<form class="form-horizontal mr-auto" method="GET" action="/search">
+      <input type="search" name="name" class="form-control mr-sm-2 form-lg" placeholder="Введите имя параграфа" aria-label="Search">
+      <button class="btn btn-outline-primary my-2 my-sm-0 " type="submit">Найти</button>
     </form>
-    <form method="GET" action="/">
-        <input type="submit" value="Вернуться на главную">
-        </form>
     <% history.forEach(function(history) { %>
         <div class="history">
         <%- include('../partials/historyDescription', {history: history}); %>
         </div>
       <% }); %>
+      <div id="snackbar"><%= toast %></div>
+      <script>
+          var x = document.getElementById("snackbar");
+          console.log(x + "" + (x == NaN))
+          x.className = "show";
+          setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+      </script>
 </body>
 </html>

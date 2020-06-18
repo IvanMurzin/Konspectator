@@ -10,14 +10,21 @@
     <title>ошибка 404</title>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark shadow-sm">
-        <span class="navbar-brand mb-0 h1">На этом сайте вы сможете быстро получить конспект из текстов по истории</span>
-    </nav>
+	<nav class="navbar navbar-dark bg-dark justify-content-between">
+		<form method="GET" action="/">	
+			<input type="submit" class="btn btn-outline-light my-2 my-sm-0 btn-lg h1" value="На этом сайте вы сможете быстро получить конспект из текстов по истории">
+		</form>
+		<div id="history">
+				<form method='GET' action="/history" class="form-inline">
+					<input type="submit" class="btn btn-outline-light my-2 my-sm-0 btn-lg" value="история" id="buttonHistory">
+				</form>
+	</nav>
+	<img allign="center" class="im" src="https://lh3.googleusercontent.com/proxy/kMct-2o4vuUTE_FWm1BCm0W7pMhW2lcU5yMbfwjbEItm6F--3fZNV8zZLP33S-Dur1fyZlvaSk5Z7lc4wRCFZZI09buLef2tHcSscvGkIWDKIbcCZ3ECbTmN-eCilunOg3jj">
     <main role="main" class="container c message p" >
         <div class= "center-block">
             <h1>Такой страницы не существует</h1>
             <form method="GET" action="/">
-                <input type="submit" value="Вернуться на главную" class="btn">
+                <input type="submit" value="Вернуться на главную" class="btn btn-outline-dark my-2 my-sm-0 btn-lg">
                 </form>
         </div>
     </main>

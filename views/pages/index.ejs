@@ -13,13 +13,14 @@
 </head>
 
 <body>
-	<div id="history">
-		<form method='GET' action="/history">
-			<input type="submit" class="btn btn-primary btn-lg" value="history" id="buttonHistory">
+	<nav class="navbar navbar-dark bg-dark justify-content-between">
+		<form method="GET" action="/">	
+			<input type="submit" class="btn btn-outline-light my-2 my-sm-0 btn-lg h1" value="На этом сайте вы сможете быстро получить конспект из текстов по истории">
 		</form>
-	</div>
-	<nav class="navbar navbar-dark bg-dark shadow-sm">
-		<span class="navbar-brand mb-0 h1">На этом сайте вы сможете быстро получить конспект из текстов по истории</span>
+		<div id="history">
+				<form method='GET' action="/history" class="form-inline">
+					<input type="submit" class="btn btn-outline-light my-2 my-sm-0 btn-lg" value="история" id="buttonHistory">
+				</form>
 	</nav>
 	<section class="jumbotron text-center">
 		<div class="container">

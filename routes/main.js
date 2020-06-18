@@ -49,7 +49,8 @@ router.get('/history', (request, response) => {
         if (err) throw err;
         parsedJSON = JSON.parse(content);
         response.render('pages/history', {
-            history: parsedJSON
+            history: parsedJSON,
+            toast:"Вся история конспектов"
         });
     });
 });
@@ -59,25 +60,29 @@ router.get("/search", (request, response) => {
     var parsedJSON;
     var ans = [];
     var flag = true;
+    var regexp = new RegExp(name,"gi")
     fs.readFile('history.json', function (err, content) {
         if (err) throw err;
         parsedJSON = JSON.parse(content);
         for (var par of parsedJSON) {
-            if (par.name == name) {
+            if (par.name.search(regexp)!=-1) {
                 flag = false;
                 var paragraph = {
-                    name: name,
+                    name: par.name,
                     imp: par.imp,
                     dat: par.dat
                 }
                 ans.push(paragraph)
-                response.render('pages/history', {
-                    history: ans
-                });
-                break;
             }
         }
-        if (flag) response.render('pages/nothing')
+        if (flag) response.render('pages/history',{
+            history: parsedJSON,
+            toast: "Ничего не нашлось :c "
+        });
+        else response.render('pages/history', {
+            history: ans,
+            toast:"Все, что нашли"
+        });
     });
 });
 
