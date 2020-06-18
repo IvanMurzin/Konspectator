@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
         toast: " 	(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
     });
 });
+
 router.post('/setFile', function (request, response, next) {
     setFile(request.body.fileName);
     var toast = "Сейчас обработаю...";
@@ -41,7 +42,18 @@ router.post('/setFile', function (request, response, next) {
         toast: toast
     });
 });
-module.exports = router;
+
+router.get('/history', (request, response) => {
+    var parsedJSON;
+    fs.readFile('history.json', function (err, content) {
+        if (err) throw err;
+        parsedJSON = JSON.parse(content);
+        response.render('pages/history',{
+            history: parsedJSON
+        });
+    });
+});
+
 
 
 
@@ -117,3 +129,4 @@ function getDatesSentences() {
     if (datesSentences.indexOf("!") < 0) return "";
     return datesSentences.substring(0, datesSentences.length - 1);
 }
+module.exports = router;
